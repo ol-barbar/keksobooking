@@ -7,9 +7,6 @@ let mapLoad = false
 let latMainMarker = 35.67500;
 let lngMainMarker = 139.75000;
 
-let flag = document.querySelector('.leaflet-attribution-flag')
-flag.remove()
-
 const map = L.map('map-canvas').on('load', () => {
   mapLoad = true
 })
@@ -70,5 +67,8 @@ filledArray.forEach((item) => {
 });
 
 getDisabled(mapLoad)
+
+let flag = document.querySelector('.leaflet-attribution-flag')
+flag.remove()
 
 export {trackingMarcker}
