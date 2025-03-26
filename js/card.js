@@ -1,6 +1,5 @@
 let template = document.querySelector('#card').content;
 let popup = template.querySelector('.popup');
-// let mapCanvas = document.querySelector('#map-canvas');
 
 // Функция заполнения карточек данными из сгенерированного массива, клонируется шаблон, заполняется данными и вставляется в конец родителя
 // Для типа жилья сопостовляет данные массива и что нужно вставить
@@ -45,20 +44,29 @@ let filledCard = (someArray) => {
   }
   capacityCard.textContent = (someArray.offer.rooms + ' комнаты для ' + someArray.offer.guests + ' гостей') || '';
   timeCard.textContent = ('Заезд после ' + someArray.offer.checkin + ', выезд до ' + someArray.offer.checkout) || '';
-  for (let i=featuresCard.children.length-1; i>=0; i--) {
-    let featuresItem = featuresCard.children[i].classList.value.split('popup__feature popup__feature--')[1];
-    if (!someArray.offer.features.includes(featuresItem)) {
-      featuresCard.removeChild(featuresCard.children[i])
+  if (!someArray.offer.features) {
+    featuresCard.remove()
+  } else {
+    for (let i=featuresCard.children.length-1; i>=0; i--) {
+      let featuresItem = featuresCard.children[i].classList.value.split('popup__feature popup__feature--')[1];
+      if (!someArray.offer.features.includes(featuresItem)) {
+        featuresCard.removeChild(featuresCard.children[i])
+      }
     }
   }
+
   descriptionCard.textContent = someArray.offer.description;
-  photosCard.querySelector('.popup__photo').src = someArray.offer.photos[0]
-  if (someArray.offer.photos.length > 1) {
-    let photo = photosCard.querySelector('.popup__photo');
-    for (let i=1; i<someArray.offer.photos.length; i++) {
-      let newPhoto = photo.cloneNode(true);
-      newPhoto.src = someArray.offer.photos[i];
-      photosCard.appendChild(newPhoto);
+  if (!someArray.offer.photos) {
+    photosCard.remove()
+  } else {
+    photosCard.querySelector('.popup__photo').src = someArray.offer.photos[0]
+    if (someArray.offer.photos.length > 1) {
+      let photo = photosCard.querySelector('.popup__photo');
+      for (let i=1; i<someArray.offer.photos.length; i++) {
+        let newPhoto = photo.cloneNode(true);
+        newPhoto.src = someArray.offer.photos[i];
+        photosCard.appendChild(newPhoto);
+      }
     }
   }
   // mapCanvas.appendChild(newCard)

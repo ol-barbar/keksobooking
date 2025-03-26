@@ -1,6 +1,5 @@
-// import { filledArray } from './data.js';
-// import { filledCard } from './card.js';
-// import { getDisabled } from './form.js';
 import { } from './map.js';
+import { createData } from './server.js';
+import { } from './filter.js';
 
-
+createData()

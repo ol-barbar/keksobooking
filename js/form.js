@@ -7,7 +7,13 @@ let timeOut = document.querySelector('#timeout');
 let roomNumber = document.querySelector('#room_number');
 let capacity = document.querySelector('#capacity');
 let title = form.querySelector('input[name="title"]');
-let address = form.querySelector('input[name="address"]');
+let avatarLoad =  form.querySelector('input[name="avatar"]');
+let avatarPreview =  form.querySelector('.ad-form-header__preview');
+let avatarPreviewImg =  avatarPreview.querySelector('img');
+let photoLoad =  form.querySelector('input[name="images"]');
+let photoPreview =  form.querySelector('.ad-form__photo');
+
+const FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
 
 let getDisabled = (mapStatus) => {
   if (!mapStatus){
@@ -93,7 +99,6 @@ roomNumber.addEventListener('change', function() {
 title.addEventListener('invalid', () => {
   if (title.validity.tooShort) {
     title.setCustomValidity('В заголовке должно быть минимум 30 символов');
-    // console.log(title.value.length)
   } else if (title.validity.tooLong) {
     title.setCustomValidity('В заголовке должно быть максимум 100 символов');
   } else if (title.validity.valueMissing) {
@@ -103,9 +108,39 @@ title.addEventListener('invalid', () => {
   }
 })
 
+avatarLoad.addEventListener('change', () => {
+  let file = avatarLoad.files[0]
+  let fileName = file.name.toLowerCase()
+  let matches = FILE_TYPES.some((it) => {
+    return fileName.endsWith(it)
+  })
+  if (matches) {
+    let reader = new FileReader()
+    reader.addEventListener('load', () => {
+      avatarPreviewImg.src = reader.result;
+    })
+    reader.readAsDataURL(file);
+  }
+})
 
+photoLoad.addEventListener('change', () => {
+  let file = photoLoad.files[0]
+  let fileName = file.name.toLowerCase()
+  let matches = FILE_TYPES.some((it) => {
+    return fileName.endsWith(it)
+  })
+  if (matches) {
+    let reader = new FileReader()
+    reader.addEventListener('load', () => {
+      let preview = document.createElement('img')
+      preview.style.width = '100%'
+      preview.style.height = '100%'
+      preview.src = reader.result
+      photoPreview.appendChild(preview)
 
-
-
+    })
+    reader.readAsDataURL(file);
+  }
+})
 
 export {getDisabled}
