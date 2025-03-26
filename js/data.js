@@ -62,6 +62,3 @@ for (let i in filledArray) {
   filledArray[i].offer.description = DESCRIPTION[i];
   filledArray[i].offer.photos = getRandomArray(PHOTOS);
 }
-
-
-export {filledArray}
